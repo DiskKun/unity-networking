@@ -1,7 +1,10 @@
 using UnityEngine;
 using Unity.Netcode;
+using TMPro;
+
 public class NetworkButtons : MonoBehaviour
 {
+    public TextMeshProUGUI roleText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,10 +19,16 @@ public class NetworkButtons : MonoBehaviour
 
     public void StartServer()
     {
-        NetworkManager.Singleton.StartServer();
+        if (NetworkManager.Singleton.StartServer())
+        {
+            roleText.text = "Started as server";
+        }
     }
     public void StartClient()
     {
-        NetworkManager.Singleton.StartClient();
+        if (NetworkManager.Singleton.StartClient())
+        {
+            roleText.text = "Started as client";
+        }
     }
 }
