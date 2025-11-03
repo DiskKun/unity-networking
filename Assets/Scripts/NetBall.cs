@@ -28,7 +28,7 @@ public class NetBall : NetworkBehaviour
             if (moveTime >= 1)
             {
                 targetPosition = new Vector2(Random.Range(-3, 3), Random.Range(-3, 3));
-                Debug.Log("target position: " + targetPosition);
+                //Debug.Log("target position: " + targetPosition);
                 startingPosition = rb.position;
                 moveTime = 0;
             }
@@ -36,7 +36,7 @@ public class NetBall : NetworkBehaviour
         
             moveTime += Time.deltaTime;
             rb.MovePosition(Vector2.Lerp(startingPosition, targetPosition, moveTime));
-            Debug.Log("move: " + Vector2.Lerp(startingPosition, targetPosition, moveTime));
+            //Debug.Log("move: " + Vector2.Lerp(startingPosition, targetPosition, moveTime));
         }
         
     }

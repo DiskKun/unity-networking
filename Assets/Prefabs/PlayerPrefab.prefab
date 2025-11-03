@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5071850728779214259}
   - component: {fileID: 1190151223954698950}
   - component: {fileID: -1335873451600602185}
+  - component: {fileID: 8217203011532991890}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -113,3 +114,16 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &8217203011532991890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5376472733236374537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99b6d5c9b83e47f5b8e4f96c493a527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
