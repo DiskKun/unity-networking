@@ -127,3 +127,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  clientBallPrefab: {fileID: 6032431926805139090, guid: ee13b71bb6ec54d8ab0b4000b8c1b271, type: 3}

@@ -3,29 +3,38 @@ using Unity.Netcode;
 
 public class Player : NetworkBehaviour
 {
-    public override void OnNetworkSpawn()
+
+    public GameObject clientBallPrefab;
+
+
+    private void Update()
     {
-        if (!IsServer && IsOwner) //Only send an RPC to the server from the client that owns the NetworkObject of this NetworkBehaviour instance
+        if (IsClient)
         {
-            ServerOnlyRpc(0, NetworkObjectId);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ServerOnlyRpc();
+            }
         }
+        
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
-    void ClientAndHostRpc(int value, ulong sourceNetworkObjectId)
-    {
-        Debug.Log($"Client Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
-        if (IsOwner) //Only send an RPC to the owner of the NetworkObject
-        {
-            ServerOnlyRpc(value + 1, sourceNetworkObjectId);
-        }
-    }
+    //[Rpc(SendTo.ClientsAndHost)]
+    //void ClientAndHostRpc(int value, ulong sourceNetworkObjectId)
+    //{
+    //    //Debug.Log($"Client Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
+    //    //if (IsOwner) //Only send an RPC to the owner of the NetworkObject
+    //    //{
+    //    //    ServerOnlyRpc(value + 1, sourceNetworkObjectId);
+    //    //}
+    //}
 
     [Rpc(SendTo.Server)]
-    void ServerOnlyRpc(int value, ulong sourceNetworkObjectId)
+    void ServerOnlyRpc()
     {
-        Debug.Log($"Server Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
-        ClientAndHostRpc(value, sourceNetworkObjectId);
+        var ball = Instantiate(clientBallPrefab);
+        var ballNetworkObject = ball.GetComponent<NetworkObject>();
+        ballNetworkObject.Spawn();
     }
 
 }
