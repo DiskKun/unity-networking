@@ -31,12 +31,15 @@ public class PlayerController : NetworkBehaviour
         if (IsOwner)
         {
             cam.Target.TrackingTarget = transform;
+            if (IsSessionOwner)
+            {
+                gm.StartRound();
+            }
+        }
 
-        }
-        if (IsSessionOwner)
-        {
-            gm.StartRound();
-        }
+
+        
+        
     }
 
     // Update is called once per frame

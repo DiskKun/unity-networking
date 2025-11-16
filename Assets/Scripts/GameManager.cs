@@ -9,6 +9,7 @@ public class GameManager : NetworkBehaviour
 {
     public GameObject goalObjectPrefab;
     public GameObject goalObjectSpawnContainer;
+    public NetworkManager nm;
 
     Transform[] goalObjectSpawnLocations;
 
@@ -28,8 +29,9 @@ public class GameManager : NetworkBehaviour
 
     void SpawnGoalObject()
     {
-        if (IsSessionOwner)
+        if (nm.LocalClient.IsSessionOwner)
         {
+            Debug.Log("Spawning...");
             NetworkSpawn(goalObjectPrefab, goalObjectSpawnLocations[UnityEngine.Random.Range(0, goalObjectSpawnLocations.Length - 1)]);
             StartCoroutine(WaitForSeconds(5, SpawnGoalObject));
         }
@@ -51,7 +53,7 @@ public class GameManager : NetworkBehaviour
 
     public void StartRound()
     {
-        if (IsSessionOwner)
+        if (nm.LocalClient.IsSessionOwner)
         {
             SpawnGoalObject();
         }
