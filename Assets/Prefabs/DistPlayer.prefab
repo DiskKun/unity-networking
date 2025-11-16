@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7368205558707626289}
   - component: {fileID: 2093359312101795890}
   - component: {fileID: 7441521865489413957}
-  - component: {fileID: 4894148721798284968}
+  - component: {fileID: 3295758194072338650}
   m_Layer: 0
   m_Name: DistPlayer
   m_TagString: Untagged
@@ -124,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 1010628348007377759, guid: f6aad5fb91e5f42e2b24a47dd2b8377f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -225,8 +225,8 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!58 &4894148721798284968
-CircleCollider2D:
+--- !u!70 &3295758194072338650
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -259,5 +259,6 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: -0.17323536, y: -0.0019912124}
+  m_Size: {x: 0.5340568, y: 0.9402636}
+  m_Direction: 0
