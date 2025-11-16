@@ -17,6 +17,7 @@ public class PlayerController : NetworkBehaviour
     Vector2 direction;
     Rigidbody2D rb;
     CinemachineCamera cam;
+    GameManager gm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,15 +27,25 @@ public class PlayerController : NetworkBehaviour
         // Since start is called whenever a new player joins, ensure that this object is the owner before setting the camera target
         // else the camera will be set to this player for all connected players
         cam = GameObject.Find("CinemachineCamera").GetComponent<CinemachineCamera>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (IsOwner)
         {
             cam.Target.TrackingTarget = transform;
 
         }
+        if (IsSessionOwner)
+        {
+            gm.StartRound();
+        }
     }
 
     // Update is called once per frame
     void Update()
+    {
+        Movement();
+    }
+
+    void Movement()
     {
         // walking
         direction = new Vector2(Input.GetAxis("Horizontal"), 0);
@@ -51,7 +62,7 @@ public class PlayerController : NetworkBehaviour
         {
             // continued presses ticks up the jumptimer
             jumpTimer += Time.deltaTime;
-            
+
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -62,6 +73,14 @@ public class PlayerController : NetworkBehaviour
         {
             // quit jumping if the jumptimer is dropped or if it has exceeded the max jump time
             jumping = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
         }
     }
 
