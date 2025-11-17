@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class ConnectionManager : MonoBehaviour
 {
-    private string _profileName;
+    public string _profileName;
     private string _sessionName;
     private int _maxPlayers = 10;
     private ConnectionState _state = ConnectionState.Disconnected;

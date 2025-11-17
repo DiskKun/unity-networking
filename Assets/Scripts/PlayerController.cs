@@ -36,10 +36,6 @@ public class PlayerController : NetworkBehaviour
                 gm.StartRound();
             }
         }
-
-
-        
-        
     }
 
     // Update is called once per frame
