@@ -28,15 +28,17 @@ public class PlayerController : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (IsOwner)
         {
+            score = 0;
+
             rb = GetComponent<Rigidbody2D>();
 
             // Since start is called whenever a new player joins, ensure that this object is the owner before setting the camera target
             // else the camera will be set to this player for all connected players
             cam = GameObject.Find("CinemachineCamera").GetComponent<CinemachineCamera>();
-            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
             cm = GameObject.Find("NetworkManager").GetComponent<ConnectionManager>();
             SetNameTextRpc(cm._profileName);
 
@@ -65,7 +67,8 @@ public class PlayerController : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     void PlayerWinRpc(string playerName)
     {
-        Debug.Log(playerName + " WINS!");
+        gm.PlayerWin(playerName);
+        score = 0;
     }
 
 
