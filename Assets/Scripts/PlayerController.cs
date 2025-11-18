@@ -23,10 +23,12 @@ public class PlayerController : NetworkBehaviour
     GameManager gm;
     ConnectionManager cm;
 
+    int score = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
         if (IsOwner)
         {
             rb = GetComponent<Rigidbody2D>();
@@ -47,7 +49,7 @@ public class PlayerController : NetworkBehaviour
                 gm.StartRound();
             }
         }
-        
+
 
 
     }
@@ -60,6 +62,12 @@ public class PlayerController : NetworkBehaviour
         playerNameTextMesh.text = name;
     }
 
+    [Rpc(SendTo.Everyone)]
+    void PlayerWinRpc(string playerName)
+    {
+        Debug.Log(playerName + " WINS!");
+    }
+
 
 
     // Update is called once per frame
@@ -68,7 +76,15 @@ public class PlayerController : NetworkBehaviour
         Movement();
         if (IsOwner)
         {
-            SetNameTextRpc(cm._profileName);
+            SetNameTextRpc(cm._profileName + " " + score + " coins");
+        }
+    }
+
+    void CheckScore()
+    {
+        if (score >= 5)
+        {
+            PlayerWinRpc(cm._profileName);
         }
     }
 
@@ -109,11 +125,14 @@ public class PlayerController : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsOwner)
+
+        if (collision.tag == "Coin")
         {
-            if (collision.tag == "Coin")
+            Destroy(collision.gameObject);
+            if (IsOwner)
             {
-                Destroy(collision.gameObject);
+                score += 1;
+                CheckScore();
             }
         }
 
