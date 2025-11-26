@@ -21,11 +21,7 @@ public class GameManager : NetworkBehaviour
 
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     void SpawnGoalObject()
     {
