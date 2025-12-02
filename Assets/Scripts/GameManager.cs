@@ -17,6 +17,7 @@ public class GameManager : NetworkBehaviour
 
     Transform[] goalObjectSpawnLocations;
     public List<PlayerController> playerControllers = new List<PlayerController>();
+    public List<NetworkObject> coins = new List<NetworkObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,7 +37,7 @@ public class GameManager : NetworkBehaviour
     {
         if (nm.LocalClient.IsSessionOwner)
         {
-            NetworkSpawn(goalObjectPrefab, goalObjectSpawnLocations[UnityEngine.Random.Range(0, goalObjectSpawnLocations.Length - 1)]);
+            coins.Add(NetworkSpawn(goalObjectPrefab, goalObjectSpawnLocations[UnityEngine.Random.Range(0, goalObjectSpawnLocations.Length - 1)]));
             StartCoroutine(WaitForSeconds(5, SpawnGoalObject));
         }
 
@@ -47,13 +48,27 @@ public class GameManager : NetworkBehaviour
         winText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
         winText.text = "Player \"" + playerName + "\" wins!";
+        ResetScores();
+        if (IsSessionOwner)
+        {
+            foreach (NetworkObject n in coins)
+            {
+                Destroy(n.gameObject);
+            }
+        }
+        
+
+        StopAllCoroutines();
+        StartCoroutine(WaitForSeconds(5, StartRound));
+        
+    }
+
+    void ResetScores()
+    {
         foreach (PlayerController p in playerControllers)
         {
             p.score = 0;
         }
-
-        StopAllCoroutines();
-        StartCoroutine(WaitForSeconds(5, StartRound));
     }
 
 
@@ -73,6 +88,7 @@ public class GameManager : NetworkBehaviour
 
     public void StartRound()
     {
+        ResetScores();
         winText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
         if (nm.LocalClient.IsSessionOwner)
@@ -81,13 +97,13 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public static GameObject NetworkSpawn(GameObject gameObject, Transform position)
+    public static NetworkObject NetworkSpawn(GameObject gameObject, Transform position)
     {
 
         // instantiates a prefab, and spawns it across the network
         var instance = Instantiate(gameObject, position.position, Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
-        return instance;
+        return instanceNetworkObject;
     }
 }

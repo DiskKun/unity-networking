@@ -138,13 +138,17 @@ public class PlayerController : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.tag == "Coin")
         {
-            Debug.Log("coincollide");
-            Destroy(collision.gameObject);
+            NetworkObject n = collision.GetComponent<NetworkObject>();
+            if (n.HasAuthority)
+            {
+                n.Despawn(false);
+                Destroy(collision.gameObject);
+            }
             if (IsOwner)
             {
+                
                 score += 1;
             }
             CheckScore();
