@@ -16,6 +16,7 @@ public class GameManager : NetworkBehaviour
     public TextMeshProUGUI timerText;
 
     Transform[] goalObjectSpawnLocations;
+    public List<PlayerController> playerControllers = new List<PlayerController>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +47,10 @@ public class GameManager : NetworkBehaviour
         winText.gameObject.SetActive(true);
         timerText.gameObject.SetActive(true);
         winText.text = "Player \"" + playerName + "\" wins!";
+        foreach (PlayerController p in playerControllers)
+        {
+            p.score = 0;
+        }
 
         StopAllCoroutines();
         StartCoroutine(WaitForSeconds(5, StartRound));

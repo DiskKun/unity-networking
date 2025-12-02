@@ -23,12 +23,13 @@ public class PlayerController : NetworkBehaviour
     GameManager gm;
     ConnectionManager cm;
 
-    int score = 0;
+    public int score = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm.playerControllers.Add(this);
 
         if (IsOwner)
         {
@@ -67,9 +68,15 @@ public class PlayerController : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     void PlayerWinRpc(string playerName)
     {
-        gm.PlayerWin(playerName);
+        //if (IsOwner)
+        //{
+        Debug.Log("setting score to 0");
         score = 0;
+        gm.PlayerWin(playerName);
+        //}
     }
+
+
 
 
 
@@ -85,10 +92,13 @@ public class PlayerController : NetworkBehaviour
 
     void CheckScore()
     {
+
         if (score >= 5)
         {
             PlayerWinRpc(cm._profileName);
         }
+
+
     }
 
     void Movement()
@@ -131,17 +141,18 @@ public class PlayerController : NetworkBehaviour
 
         if (collision.tag == "Coin")
         {
+            Debug.Log("coincollide");
             Destroy(collision.gameObject);
             if (IsOwner)
             {
                 score += 1;
-                CheckScore();
             }
+            CheckScore();
         }
 
     }
 
-    
+
 
     private void FixedUpdate()
     {
