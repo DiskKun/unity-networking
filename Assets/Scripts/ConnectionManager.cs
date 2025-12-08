@@ -14,6 +14,7 @@ public class ConnectionManager : MonoBehaviour
     private ConnectionState _state = ConnectionState.Disconnected;
     private ISession _session;
     private NetworkManager m_NetworkManager;
+    public GameManager gm;
 
     private enum ConnectionState
     {
@@ -35,6 +36,8 @@ public class ConnectionManager : MonoBehaviour
         if (m_NetworkManager.LocalClient.IsSessionOwner)
         {
             Debug.Log($"Client-{m_NetworkManager.LocalClientId} is the session owner!");
+
+            gm.StartRound();
         }
     }
 
